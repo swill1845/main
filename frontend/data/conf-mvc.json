@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "BRAD", "name": "Bradley" },
+    { "id": "BEL",  "name": "Belmont" },
+    { "id": "DRAK", "name": "Drake" },
+    { "id": "ILLST","name": "Illinois State" },
+    { "id": "INDST","name": "Indiana State" },
+    { "id": "MOST", "name": "Missouri State" },
+    { "id": "MURR", "name": "Murray State" },
+    { "id": "UNI",  "name": "Northern Iowa" },
+    { "id": "SIU",  "name": "Southern Illinois" },
+    { "id": "USI",  "name": "UIC" },
+    { "id": "VALP", "name": "Valparaiso" }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "AMER", "name": "American" },
+    { "id": "ARMY", "name": "Army West Point" },
+    { "id": "BOSTU","name": "Boston University" },
+    { "id": "BUCK", "name": "Bucknell" },
+    { "id": "COLG", "name": "Colgate" },
+    { "id": "HC",   "name": "Holy Cross" },
+    { "id": "LAF",  "name": "Lafayette" },
+    { "id": "LEH",  "name": "Lehigh" },
+    { "id": "LOY-MD","name": "Loyola (MD)" },
+    { "id": "NAVY", "name": "Navy" }
+  ]
+}

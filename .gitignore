@@ -1,0 +1,35 @@
+# Node / JS
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python (if any later)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Build outputs (if you later add a build system)
+dist/
+build/
+
+# Local databases / runtime files
+*.sqlite
+*.sqlite3
+*.db
+*.sqlite-wal
+*.sqlite-shm
+*-wal
+*-shm
+
+
+# Env files (never commit secrets)
+.env
+.env.*

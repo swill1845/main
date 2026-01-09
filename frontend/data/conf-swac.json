@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "ALAST","name": "Alabama State" },
+    { "id": "ALAM", "name": "Alabama A&M" },
+    { "id": "ALC",  "name": "Alcorn State" },
+    { "id": "BCU",  "name": "Bethune–Cookman" },
+    { "id": "FAMU", "name": "Florida A&M" },
+    { "id": "GRAM", "name": "Grambling State" },
+    { "id": "JSU",  "name": "Jackson State" },
+    { "id": "MVSU", "name": "Mississippi Valley State" },
+    { "id": "PVAM", "name": "Prairie View A&M" },
+    { "id": "SOUTH","name": "Southern" },
+    { "id": "TXSO", "name": "Texas Southern" },
+    { "id": "UAPB", "name": "Arkansas–Pine Bluff" }
+  ]
+}

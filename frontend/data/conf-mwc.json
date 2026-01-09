@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "AFA",  "name": "Air Force" },
+    { "id": "BSU",  "name": "Boise State" },
+    { "id": "CSU",  "name": "Colorado State" },
+    { "id": "FSU2", "name": "Fresno State" },
+    { "id": "HAW",  "name": "Hawai‘i" },
+    { "id": "NEV",  "name": "Nevada" },
+    { "id": "UNM",  "name": "New Mexico" },
+    { "id": "SDSU", "name": "San Diego State" },
+    { "id": "SJSU", "name": "San José State" },
+    { "id": "UNLV", "name": "UNLV" },
+    { "id": "USU",  "name": "Utah State" },
+    { "id": "WYO",  "name": "Wyoming" }
+  ]
+}

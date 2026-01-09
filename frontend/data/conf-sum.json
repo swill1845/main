@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "DEN",  "name": "Denver" },
+    { "id": "KC",   "name": "Kansas City" },
+    { "id": "NDSU", "name": "North Dakota State" },
+    { "id": "ND",   "name": "North Dakota" },
+    { "id": "OMA",  "name": "Omaha" },
+    { "id": "ORU",  "name": "Oral Roberts" },
+    { "id": "SDSU2","name": "South Dakota State" },
+    { "id": "SD",   "name": "South Dakota" },
+    { "id": "STTH", "name": "St. Thomas (MN)" }
+  ]
+}

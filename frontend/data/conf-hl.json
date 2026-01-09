@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "CLEV", "name": "Cleveland State" },
+    { "id": "DET",  "name": "Detroit Mercy" },
+    { "id": "GB",   "name": "Green Bay" },
+    { "id": "IUPUI","name": "IUPUI" },
+    { "id": "MILW", "name": "Milwaukee" },
+    { "id": "NKU",  "name": "Northern Kentucky" },
+    { "id": "OAK",  "name": "Oakland" },
+    { "id": "PURFW","name": "Purdue Fort Wayne" },
+    { "id": "RMU",  "name": "Robert Morris" },
+    { "id": "WRST", "name": "Wright State" },
+    { "id": "YSU",  "name": "Youngstown State" }
+  ]
+}

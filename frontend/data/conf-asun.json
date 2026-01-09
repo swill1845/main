@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "AUST", "name": "Austin Peay" },
+    { "id": "BELL", "name": "Bellarmine" },
+    { "id": "CARK", "name": "Central Arkansas" },
+    { "id": "EKU",  "name": "Eastern Kentucky" },
+    { "id": "FGCU", "name": "FGCU" },
+    { "id": "JAX",  "name": "Jacksonville" },
+    { "id": "JU",   "name": "Jacksonville State (moving varies)" },
+    { "id": "KENN", "name": "Kennesaw State (moving)" },
+    { "id": "LIP",  "name": "Lipscomb" },
+    { "id": "NORTHA","name": "North Alabama" },
+    { "id": "QUEEN","name": "Queens (NC)" },
+    { "id": "STET", "name": "Stetson" }
+  ]
+}

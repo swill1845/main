@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "ORST", "name": "Oregon State" },
+    { "id": "WSU",  "name": "Washington State" }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "ALB",  "name": "Albany" },
+    { "id": "BING", "name": "Binghamton" },
+    { "id": "BRY",  "name": "Bryant" },
+    { "id": "HART", "name": "Hartford" },
+    { "id": "MAINE","name": "Maine" },
+    { "id": "NJIT", "name": "NJIT" },
+    { "id": "UML",  "name": "UMass Lowell" },
+    { "id": "UNH",  "name": "New Hampshire" },
+    { "id": "VERM", "name": "Vermont" }
+  ]
+}

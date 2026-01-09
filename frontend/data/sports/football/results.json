@@ -1,0 +1,12 @@
+[
+  {
+    "_note": "Example. Use whatever box-score fields you want under meta.",
+    "date": "2025-09-06",
+    "sport": "football_m",
+    "homeId": "example-team-id",
+    "awayId": "another-team-id",
+    "scoreHome": 24,
+    "scoreAway": 17,
+    "meta": { "ot": false }
+  }
+]

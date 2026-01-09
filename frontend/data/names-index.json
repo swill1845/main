@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "files": {
+    "male": [
+      "first-male-001.json",
+      "first-male-002.json",
+      "first-male-003.json"
+    ],
+    "female": [
+      "first-female-001.json",
+      "first-female-002.json",
+      "first-female-003.json"
+    ],
+    "last": [
+      "last-001.json",
+      "last-002.json",
+      "last-003.json",
+      "last-004.json",
+      "last-005.json",
+      "last-006.json"
+    ]
+  }
+}

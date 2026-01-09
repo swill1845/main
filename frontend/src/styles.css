@@ -1,0 +1,178 @@
+:root{
+  --bg:#0b1220;
+  --panel:#101a2e;
+  --text:#e7eefc;
+  --muted:#a7b4d0;
+  --accent:#5aa1ff;
+  --accent2:#8c5cff;
+  --line:rgba(255,255,255,0.08);
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  --radius:18px;
+}
+
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  background:
+    radial-gradient(1100px 800px at 20% 10%, rgba(90,161,255,0.25), transparent 60%),
+    radial-gradient(900px 700px at 90% 20%, rgba(140,92,255,0.22), transparent 60%),
+    radial-gradient(700px 700px at 50% 90%, rgba(43,220,154,0.10), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  height:100vh;
+  overflow:hidden;
+}
+
+.app{
+  display:flex;
+  height:100vh;
+}
+
+.sidebar{
+  width:300px;
+  background:linear-gradient(180deg, rgba(16,26,46,0.95), rgba(10,16,30,0.95));
+  border-right:1px solid var(--line);
+  padding:18px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 10px 6px 10px;
+}
+.logo{
+  width:44px;height:44px;border-radius:14px;
+  background:linear-gradient(135deg, var(--accent), var(--accent2));
+  box-shadow: var(--shadow);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800; letter-spacing:0.8px;
+}
+.brand h1{ font-size:15px; margin:0; line-height:1.1; }
+.brand .sub{ font-size:12px; color:var(--muted); margin-top:4px; }
+
+.panel{
+  background:rgba(16,26,46,0.65);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:12px;
+  box-shadow: var(--shadow);
+}
+
+.small{ font-size:12px; color:var(--muted); }
+.muted{ color:var(--muted); font-size:13px; line-height:1.4; }
+
+select, input, textarea{
+  width:100%;
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(7,12,24,0.85);
+  border:1px solid var(--line);
+  color:var(--text);
+  outline:none;
+}
+
+.tabs{ display:flex; gap:8px; }
+.tab{
+  flex:1;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:rgba(7,12,24,0.55);
+  color:var(--muted);
+  cursor:pointer;
+  text-align:center;
+  font-size:13px;
+  user-select:none;
+}
+.tab.active{
+  background:linear-gradient(135deg, rgba(90,161,255,0.35), rgba(140,92,255,0.25));
+  color:var(--text);
+  border-color:rgba(90,161,255,0.35);
+}
+
+.nav{ display:flex; flex-direction:column; gap:6px; }
+.nav-item{
+  padding:10px 12px;
+  border-radius:14px;
+  cursor:pointer;
+  border:1px solid transparent;
+  color:var(--muted);
+  background:rgba(7,12,24,0.25);
+}
+.nav-item:hover{
+  border-color:rgba(255,255,255,0.09);
+  color:var(--text);
+}
+.nav-item.active{
+  background:linear-gradient(135deg, rgba(90,161,255,0.25), rgba(140,92,255,0.18));
+  border-color:rgba(90,161,255,0.25);
+  color:var(--text);
+}
+
+.main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.topbar{
+  padding:16px 18px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(10,16,30,0.65);
+}
+.topbar h2{ margin:0; font-size:16px; letter-spacing:0.2px; }
+.spacer{ flex:1; }
+
+.content{
+  flex:1;
+  overflow:auto;
+  padding:18px;
+}
+
+.card{
+  background:rgba(16,26,46,0.55);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:14px;
+  box-shadow: var(--shadow);
+  margin-bottom:14px;
+}
+.card h3{ margin:0 0 10px 0; font-size:14px; }
+
+.btn{
+  border:none;
+  border-radius:14px;
+  padding:10px 12px;
+  cursor:pointer;
+  background:linear-gradient(135deg, rgba(90,161,255,0.9), rgba(140,92,255,0.85));
+  color:#061024;
+  font-weight:700;
+}
+.btn.secondary{
+  background:rgba(7,12,24,0.55);
+  color:var(--text);
+  border:1px solid var(--line);
+  font-weight:600;
+}
+
+.row{ display:flex; gap:10px; align-items:center; }
+.divider{ height:1px; background:var(--line); margin:14px 0; }
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12, 1fr);
+  gap:14px;
+}
+.span6{ grid-column:span 12; }
+@media(min-width:980px){
+  .span6{ grid-column:span 6; }
+}

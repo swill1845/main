@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "BC",   "name": "Boston College" },
+    { "id": "CLEM", "name": "Clemson" },
+    { "id": "DUKE", "name": "Duke" },
+    { "id": "FSU",  "name": "Florida State" },
+    { "id": "GT",   "name": "Georgia Tech" },
+    { "id": "LOU",  "name": "Louisville" },
+    { "id": "MIA",  "name": "Miami (FL)" },
+    { "id": "UNC",  "name": "North Carolina" },
+    { "id": "NCSU", "name": "NC State" },
+    { "id": "ND",   "name": "Notre Dame" },
+    { "id": "PITT", "name": "Pittsburgh" },
+    { "id": "SYR",  "name": "Syracuse" },
+    { "id": "UVA",  "name": "Virginia" },
+    { "id": "VT",   "name": "Virginia Tech" },
+    { "id": "WF",   "name": "Wake Forest" },
+    { "id": "CAL",  "name": "California" },
+    { "id": "STAN", "name": "Stanford" },
+    { "id": "SMU",  "name": "SMU" }
+  ]
+}

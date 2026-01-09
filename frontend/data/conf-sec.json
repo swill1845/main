@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "ALA",  "name": "Alabama" },
+    { "id": "ARK",  "name": "Arkansas" },
+    { "id": "AUB",  "name": "Auburn" },
+    { "id": "UF",   "name": "Florida" },
+    { "id": "UGA",  "name": "Georgia" },
+    { "id": "UK",   "name": "Kentucky" },
+    { "id": "LSU",  "name": "LSU" },
+    { "id": "MISS", "name": "Ole Miss" },
+    { "id": "MSST", "name": "Mississippi State" },
+    { "id": "MIZZ", "name": "Missouri" },
+    { "id": "SCAR", "name": "South Carolina" },
+    { "id": "TENN", "name": "Tennessee" },
+    { "id": "TAMU", "name": "Texas A&M" },
+    { "id": "VAND", "name": "Vanderbilt" },
+    { "id": "TEX",  "name": "Texas" },
+    { "id": "OKLA", "name": "Oklahoma" }
+  ]
+}

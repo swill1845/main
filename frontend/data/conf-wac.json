@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "ACU",  "name": "Abilene Christian" },
+    { "id": "CBU",  "name": "California Baptist" },
+    { "id": "GCU",  "name": "Grand Canyon" },
+    { "id": "SFA",  "name": "Stephen F. Austin" },
+    { "id": "SHSU", "name": "Sam Houston (moving/varies by sport)" },
+    { "id": "SUU",  "name": "Southern Utah" },
+    { "id": "TARL", "name": "Tarleton State" },
+    { "id": "TEXAMCC","name": "Texas A&M–Corpus Christi" },
+    { "id": "UTRGV","name": "UT Rio Grande Valley" },
+    { "id": "UTAHV","name": "Utah Valley" },
+    { "id": "UTA",  "name": "UT Arlington" },
+    { "id": "SAC",  "name": "Seattle U" }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "_note": "teamId -> list of games. Example below shows the expected fields.",
+  "example-team-id": [
+    {
+      "date": "2025-09-06",
+      "day": "Sat",
+      "oppId": "another-team-id",
+      "ha": "H",
+      "sport": "football_m",
+      "isConference": false,
+      "isSpecial": false
+    }
+  ]
+}

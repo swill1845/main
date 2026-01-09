@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "CHAT", "name": "Chattanooga" },
+    { "id": "CIT",  "name": "The Citadel" },
+    { "id": "ETSU", "name": "ETSU" },
+    { "id": "FSU3", "name": "Furman" },
+    { "id": "MERC", "name": "Mercer" },
+    { "id": "SAMF", "name": "Samford" },
+    { "id": "UNCG", "name": "UNC Greensboro" },
+    { "id": "VMI",  "name": "VMI" },
+    { "id": "WCU",  "name": "Western Carolina" },
+    { "id": "WOF",  "name": "Wofford" }
+  ]
+}

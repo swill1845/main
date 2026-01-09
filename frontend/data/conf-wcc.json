@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "GONZ", "name": "Gonzaga" },
+    { "id": "LMU",  "name": "Loyola Marymount" },
+    { "id": "PACU", "name": "Pacific" },
+    { "id": "PEPP", "name": "Pepperdine" },
+    { "id": "PORT", "name": "Portland" },
+    { "id": "SANTA","name": "Santa Clara" },
+    { "id": "SFD",  "name": "San Francisco" },
+    { "id": "USD",  "name": "San Diego" },
+    { "id": "SMC",  "name": "Saint Mary’s" }
+  ]
+}

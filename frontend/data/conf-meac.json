@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "COPP", "name": "Coppin State" },
+    { "id": "DELST","name": "Delaware State" },
+    { "id": "HOW",  "name": "Howard" },
+    { "id": "MDES", "name": "Maryland Eastern Shore" },
+    { "id": "MSU3", "name": "Morgan State" },
+    { "id": "NC-C", "name": "North Carolina Central" },
+    { "id": "NORF", "name": "Norfolk State" },
+    { "id": "SCST", "name": "South Carolina State" }
+  ]
+}

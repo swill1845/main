@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>AD SIM — Football (Standalone)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root{
+            --bg:#05070d;--card:#161a23;--muted:#8b95a7;--text:#e7ecf3;--accent:#5aa9ff;
+            --border:#232a36;--shadow:rgba(0,0,0,0.35);--btn:#1f2735;--btn-hover:#2a354a;--chip:#121826;
+        }
+        *{box-sizing:border-box}
+        body{
+            margin:0;
+            font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;
+            background:radial-gradient(900px 700px at 70% -10%,#1a2233 0%,#05070d 50%) no-repeat,var(--bg);
+            color:var(--text);
+        }
+        header{
+            padding:14px 18px;
+            border-bottom:1px solid var(--border);
+            background:linear-gradient(180deg,rgba(255,255,255,.02),transparent);
+            box-shadow:0 4px 14px var(--shadow);
+            position:sticky;top:0;z-index:10;
+        }
+        .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+        h1{margin:0;font-weight:700;font-size:18px;letter-spacing:.4px}
+        .badge{font-size:11px;color:var(--muted);border:1px solid var(--border);padding:2px 8px;border-radius:999px}
+        .spacer{flex:1}
+        select,button,input{
+            background:var(--btn);color:var(--text);
+            border:1px solid var(--border);
+            padding:6px 10px;border-radius:8px;
+            cursor:pointer;font-size:13px;
+            transition:background .15s ease,transform .05s ease;
+        }
+        input[type="date"]{background:var(--btn);color:var(--text)}
+        button:hover{background:var(--btn-hover)} button:active{transform:translateY(1px)}
+        button.primary{background:var(--accent);border:1px solid transparent;color:#08111d;font-weight:600;font-size:13px}
+        button.primary:hover{filter:brightness(1.06)}
+        button.danger{color:#ff9b9b;border-color:#ff9b9b;background:transparent}
+        .status{margin:8px 0 0;font-size:12px;color:#8b95a7}
+        .status strong{color:#e7ecf3}
+        .ok{color:#7bd389}.err{color:#ff6b6b}.warn{color:#ffd479}
+        main{
+            max-width:1180px;margin:14px auto 30px;
+            padding:0 16px 20px;
+        }
+        .grid2{display:grid;grid-template-columns:1.1fr 1.4fr;gap:14px}
+        .card{
+            background:var(--card);border:1px solid var(--border);
+            border-radius:14px;padding:14px;box-shadow:0 8px 24px var(--shadow);
+        }
+        h2{margin:0 0 8px;font-size:16px}
+        h3{margin:0 0 6px;font-size:14px}
+        .small{font-size:12px;color:#8b95a7}
+        .chips{display:flex;flex-wrap:wrap;gap:6px}
+        .chip{
+            font-size:11px;line-height:1;padding:6px 8px;border-radius:999px;
+            background:var(--chip);border:1px solid #1f2636;color:#cbd6ea;cursor:pointer;
+        }
+        .chip:hover{border-color:#2b3952;background:#152034;color:#fff}
+        .table{width:100%;border-collapse:collapse}
+        .table th,.table td{border-bottom:1px solid var(--border);padding:6px 4px;font-size:12px;text-align:left}
+        .pill{padding:2px 8px;border-radius:999px;border:1px solid var(--border);background:#0f1522;font-size:11px}
+        .conf-game{font-weight:600}
+        .ooc-game{color:#aeb8cb}
+        @media (max-width:960px){
+            .grid2{grid-template-columns:1fr}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="row">
+            <h1>Football — Schedules</h1>
+            <span class="badge">Standalone football module</span>
+            <span class="badge">Local save: ad-sim-football-v2</span>
+            <div class="spacer"></div>
+            <label class="small">Team</label>
+            <select id="teamSelect"></select>
+            <button id="saveBtn" class="primary">Save</button>
+            <button id="loadBtn">Load</button>
+            <input id="fileInput" type="file" accept="application/json" style="display:none" />
+        </div>
+        <div id="status" class="status"></div>
+    </header>
+
+    <main>
+        <div class="grid2">
+            <section class="card">
+                <h2>Add Game for Selected Team</h2>
+                <p class="small">
+                    This screen only touches <b>football</b>. Rules enforced: max <b>7 home</b>, <b>6 away</b>,
+                    Saturdays only (Wednesdays allowed if a MAC team is involved), and conference vs OOC sanity checks.
+                </p>
+
+                <h3 style="margin-top:6px">1. New Game</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                    <div>
+                        <div class="small">Date</div>
+                        <input id="newDate" type="date" />
+                    </div>
+                    <div>
+                        <div class="small">Conf/OOC</div>
+                        <select id="newConfFlag">
+                            <option value="auto">Auto (by conferences)</option>
+                            <option value="conf">Force Conf</option>
+                            <option value="ooc">Force OOC</option>
+                        </select>
+                    </div>
+                    <div>
+                        <div class="small">Opponent</div>
+                        <select id="newOpp"></select>
+                    </div>
+                    <div>
+                        <div class="small">Location (relative to selected team)</div>
+                        <select id="newLoc">
+                            <option value="H">Home</option>
+                            <option value="A">Away</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:8px;gap:8px;flex-wrap:wrap">
+                    <button id="btnAddGame" class="primary">Add Game</button>
+                    <span id="createMsg" class="small"></span>
+                </div>
+
+                <h3 style="margin-top:14px">2. See Who’s Free</h3>
+                <div class="row" style="gap:8px;flex-wrap:wrap">
+                    <label class="small">Team</label>
+                    <select id="availTeam"></select>
+                    <label class="small">Date</label>
+                    <input id="availDate" type="date" />
+                    <button id="btnCheckAvail">Check</button>
+                </div>
+                <div style="margin-top:6px">
+                    <div class="small">Idle (same conference)</div>
+                    <div id="availConfList" class="chips"></div>
+                </div>
+                <div style="margin-top:6px">
+                    <div class="small">Idle (other conferences / OOC)</div>
+                    <div id="availOOCList" class="chips"></div>
+                </div>
+                <p class="small" style="margin-top:6px">
+                    Tip: click a chip to prefill a game for the currently selected team.
+                </p>
+            </section>
+
+            <section class="card">
+                <h2>Current Schedule</h2>
+                <p class="small" id="counts"></p>
+
+                <table class="table" style="margin-top:4px">
+                    <thead>
+                        <tr>
+                            <th>#</th><th>Date</th><th>Day</th><th>Opponent</th>
+                            <th>H/A</th><th>Type</th><th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedBody"></tbody>
+                </table>
+
+                <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:8px">
+                    <h3>Edit Selected Game</h3>
+                    <div class="row" style="gap:8px;flex-wrap:wrap">
+                        <span class="small">Target</span>
+                        <span id="editTarget" class="pill">—</span>
+                    </div>
+                    <div class="row" style="gap:8px;margin-top:6px;flex-wrap:wrap">
+                        <label class="small">Date</label>
+                        <input id="editDate" type="date" />
+                        <label class="small">H/A</label>
+                        <select id="editLoc">
+                            <option value="H">Home</option>
+                            <option value="A">Away</option>
+                        </select>
+                    </div>
+                    <div class="row" style="gap:8px;margin-top:6px;flex-wrap:wrap">
+                        <label class="small">Opponent (idle that day)</label>
+                        <select id="editOpp"></select>
+                        <label class="small">Conf/OOC</label>
+                        <select id="editConfFlag">
+                            <option value="auto">Auto</option>
+                            <option value="conf">Conf</option>
+                            <option value="ooc">OOC</option>
+                        </select>
+                    </div>
+                    <div class="row" style="gap:8px;margin-top:6px;flex-wrap:wrap">
+                        <button id="btnApplyEdit" class="primary">Apply</button>
+                        <button id="btnDelete" class="danger">Delete</button>
+                        <span id="editMsg" class="small"></span>
+                    </div>
+                </div>
+
+                <div id="conflicts" class="small" style="margin-top:8px"></div>
+
+                <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:8px">
+                    <h3>Rivals (Conference Only)</h3>
+                    <p class="small">
+                        Choose up to three in-conference rivals for the selected team. **These dates are prioritized during auto-generation.**
+                    </p>
+                    <div style="display:grid;grid-template-columns:1.2fr 0.9fr;gap:6px;margin-top:4px">
+                        <div>
+                            <div class="small">Rival 1</div>
+                            <select id="rival1"></select>
+                        </div>
+                        <div>
+                            <div class="small">Rival 1 Date</div>
+                            <input id="rival1Date" type="date" />
+                        </div>
+
+                        <div>
+                            <div class="small">Rival 2</div>
+                            <select id="rival2"></select>
+                        </div>
+                        <div>
+                            <div class="small">Rival 2 Date</div>
+                            <input id="rival2Date" type="date" />
+                        </div>
+
+                        <div>
+                            <div class="small">Rival 3</div>
+                            <select id="rival3"></select>
+                        </div>
+                        <div>
+                            <div class="small">Rival 3 Date</div>
+                            <input id="rival3Date" type="date" />
+                        </div>
+                    </div>
+                    <div class="row" style="gap:8px;margin-top:6px;flex-wrap:wrap">
+                        <button id="btnSaveRivals" class="primary">Save Rivals for Team</button>
+                    </div>
+                </div>
+
+                <div style="margin-top:10px;border-top:1px solid var(--border);padding-top:8px">
+                    <h3>Auto-generate / Re-generate Schedules</h3>
+                    <p class="small">
+                        **Full Rebuild:** Clears ALL games and rebuilds the 8 Conf + 3 OOC schedule for the entire league (OOC in Wks 1, 3, 10).
+                    </p>
+                    <div class="row" style="gap:8px;flex-wrap:wrap">
+                        <label class="small">Season start (Sept 1st Sat)</label>
+                        <input id="autoStartDate" type="date" />
+                        <button id="btnFullRebuild" class="primary">Full Rebuild</button>
+                        <button id="btnAutoOOC" class="primary">OOC Fill</button>
+                        <span id="autoMsg" class="small"></span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // ====== CORE STATE (football-only) ======
+        const LOCAL_KEY = "ad-sim-football-v2";
+        const VERSION = 3;
+        const SCHEDULE_YEAR = 2025; // Used for H/A rotation baseline
+        const CONF_GAMES_REQUIRED = 8;
+        const OOC_GAMES_REQUIRED = 3; // Enforce 3 OOC games for 11 total scheduled games
+        const SEASON_WEEKS = 13;
+        const DATA_ROOT = "/data"; // ADJUST THIS PATH IF YOUR /data FOLDER IS NOT IN THE ROOT
+
+        let state = {
+            version:VERSION,
+            meta:{createdAt:new Date().toISOString(), lastSavedAt:null},
+            teams:[], 			// {id,name,conference}
+            games:[], 			// {id,date,day,homeId,awayId,isConference,isRivalry}
+            selectedTeamId:null,
+            rivals:{} 			// { [teamId]: [{oppId,date}] }
+        };
+
+        // ---- Elements ----
+        const $status = document.getElementById("status");
+        const $teamSelect = document.getElementById("teamSelect");
+
+        const $newDate = document.getElementById("newDate");
+        const $newConfFlag = document.getElementById("newConfFlag");
+        const $newOpp = document.getElementById("newOpp");
+        const $newLoc = document.getElementById("newLoc");
+        const $createMsg = document.getElementById("createMsg");
+
+        const $availTeam = document.getElementById("availTeam");
+        const $availDate = document.getElementById("availDate");
+        const $availConfList = document.getElementById("availConfList");
+        const $availOOCList = document.getElementById("availOOCList");
+
+        const $schedBody = document.getElementById("schedBody");
+        const $counts = document.getElementById("counts");
+
+        const $editTarget = document.getElementById("editTarget");
+        const $editDate = document.getElementById("editDate");
+        const $editLoc = document.getElementById("editLoc");
+        const $editOpp = document.getElementById("editOpp");
+        const $editConfFlag = document.getElementById("editConfFlag");
+        const $editMsg = document.getElementById("editMsg");
+        const $conflicts = document.getElementById("conflicts");
+
+        // Rivals + auto
+        const $rival1 = document.getElementById("rival1");
+        const $rival2 = document.getElementById("rival2");
+        const $rival3 = document.getElementById("rival3");
+        const $rival1Date = document.getElementById("rival1Date");
+        const $rival2Date = document.getElementById("rival2Date");
+        const $rival3Date = document.getElementById("rival3Date");
+        const $autoStartDate = document.getElementById("autoStartDate");
+        const $autoMsg = document.getElementById("autoMsg");
+
+        let currentEditId = null;
+
+        // ---- Utilities ----
+        function setStatus(msg,type=""){
+            const cls = type==="err"?"err":type==="ok"?"ok":type==="warn"?"warn":"muted";
+            $status.innerHTML = `<strong>Status:</strong> <span class="${cls}">${msg}</span>`;
+        }
+
+        async function loadJSON(path){
+            const res = await fetch(path);
+            if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+            return res.json();
+        }
+
+        function autosave(){
+            try{
+                state.meta.lastSavedAt = new Date().toISOString();
+                localStorage.setItem(LOCAL_KEY, JSON.stringify(state,null,2));
+            }catch{}
+        }
+
+        function applyLoadedState(obj){
+            if(!obj || !Array.isArray(obj.teams)) throw new Error("Invalid football save");
+            state = obj;
+            if(!state.rivals) state.rivals = {};
+            if(!state.games) state.games = [];
+        }
+
+        function teamById(id){ return state.teams.find(t=>t.id===id); }
+        function teamName(id){ return teamById(id)?.name || id; }
+        function teamConf(id){ return teamById(id)?.conference || ""; }
+
+        function weekday(dateStr){
+            const d = new Date(dateStr + "T00:00:00"); 
+            if(isNaN(+d)) return "?";
+            return ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][d.getDay()];
+        }
+
+        function isMACConf(name){
+            const c = (name||"").toLowerCase();
+            return c.includes("mid-american") || c.includes("mac");
+        }
+        function isMACTeam(id){ return isMACConf(teamConf(id)); }
+
+        function gamesForTeam(id){
+            return state.games.filter(g=>g.homeId===id || g.awayId===id);
+        }
+        function homeCount(id){
+            return gamesForTeam(id).filter(g=>g.homeId===id).length;
+        }
+        function awayCount(id){
+            return gamesForTeam(id).filter(g=>g.awayId===id).length;
+        }
+        function confCount(id){
+            return gamesForTeam(id).filter(g=>g.isConference).length;
+        }
+        function oocCount(id){
+            return gamesForTeam(id).filter(g=>!g.isConference).length;
+        }
+
+        function hasGameOn(teamId, date, ignoreId=null){
+            return state.games.some(g=>{
+                if(ignoreId && g.id===ignoreId) return false;
+                if(g.date!==date) return false;
+                return g.homeId===teamId || g.awayId===teamId;
+            });
+        }
+
+        function gameTypeLabel(isConf){ return isConf ? "Conf" : "OOC"; }
+        function gameTypeClass(isConf){ return isConf ? "conf-game" : "ooc-game"; }
+
+        function canScheduleGame(homeId, awayId, date, isConference, ignoreId=null){
+            if(!homeId || !awayId) return {ok:false,msg:"Missing team."};
+            if(homeId===awayId) return {ok:false,msg:"Teams must differ."};
+            if(!date) return {ok:false,msg:"Missing date."};
+
+            const day = weekday(date);
+            if(day!=="Sat" && day!=="Wed") return {ok:false,msg:"Only Saturday or Wednesday."};
+            if(day==="Wed" && !(isMACTeam(homeId)||isMACTeam(awayId))) return {ok:false,msg:"Wednesday only if a MAC team is involved."};
+
+            if(hasGameOn(homeId,date,ignoreId) || hasGameOn(awayId,date,ignoreId)){
+                return {ok:false,msg:"Conflict: one of the teams already has a game that day."};
+            }
+
+            const adjHome = homeCount(homeId) - (ignoreId ? gamesForTeam(homeId).filter(g=>g.id===ignoreId && g.homeId===homeId).length : 0);
+            const adjAway = awayCount(awayId) - (ignoreId ? gamesForTeam(awayId).filter(g=>g.id===ignoreId && g.awayId===awayId).length : 0);
+            if(adjHome >= 7) return {ok:false,msg:`Home cap reached for ${teamName(homeId)} (7).`};
+            if(adjAway >= 6) return {ok:false,msg:`Away cap reached for ${teamName(awayId)} (6).`};
+
+            const sameConf = teamConf(homeId) === teamConf(awayId);
+            if(isConference && !sameConf) return {ok:false,msg:"Conf game must be same conference."};
+            if(!isConference && sameConf) return {ok:false,msg:"OOC must be different conferences."};
+
+            return {ok:true,msg:"OK"};
+        }
+
+        function availableOpponents(teamId, date){
+            const myConf = teamConf(teamId);
+            const same = [];
+            const other = [];
+            state.teams.forEach(t=>{
+                if(t.id===teamId) return;
+                if(hasGameOn(t.id,date)) return;
+                if(t.conference===myConf) same.push(t); else other.push(t);
+            });
+            same.sort((a,b)=>a.name.localeCompare(b.name));
+            other.sort((a,b)=>a.name.localeCompare(b.name));
+            return {same, other};
+        }
+
+        // ====== SCHEDULE GENERATION UTILS ======
+        async function loadDivisionI(){
+            const index = await loadJSON(`${DATA_ROOT}/d1-index.json`);
+            if(!Array.isArray(index.conferences)) throw new Error("Bad d1-index.json");
+            const results = await Promise.allSettled(
+                index.conferences.map(c=>loadJSON(`${DATA_ROOT}/${c.file}`))
+            );
+            const teams = [];
+            results.forEach((r,i)=>{
+                const confMeta = index.conferences[i];
+                if(r.status==="fulfilled" && Array.isArray(r.value.members)){
+                    r.value.members.forEach(m=>teams.push({id:m.id,name:m.name,conference:confMeta.name}));
+                }
+            });
+            teams.sort((a,b)=>a.name.localeCompare(b.name));
+            state.teams = teams;
+            if(!state.rivals) state.rivals = {};
+            if(!state.selectedTeamId && teams[0]) state.selectedTeamId = teams[0].id;
+        }
+
+
+        function getFirstSaturdayInSeptember(year){
+            const d = new Date(`${year}-09-01T00:00:00`);
+            while(d.getDay() !== 6) d.setDate(d.getDate() + 1);
+            return d.toISOString().slice(0,10);
+        }
+
+        function generateSaturdaySeries(startDateStr, weeks){
+            let d = new Date(startDateStr + "T00:00:00");
+            if(isNaN(+d)) return [];
+            
+            // Ensure we start on a Saturday
+            if(d.getDay() !== 6) {
+                while(d.getDay()!==6) d.setDate(d.getDate()+1); 
+            }
+            
+            const arr = [];
+            for(let i=0;i<weeks;i++){
+                arr.push(d.toISOString().slice(0,10));
+                d.setDate(d.getDate()+7);
+            }
+            return arr;
+        }
+        
+        // --- League-Wide Conference Generator ---
+        function autoGenerateAllConfSchedule(startDate) {
+            const startStr = startDate;
+            const allSaturdays = generateSaturdaySeries(startStr, SEASON_WEEKS);
+            
+            // Conf games must avoid Weeks 1, 3, 10 for OOC
+            const unusableIndices = [0, 2, 9]; // Week 1 (Index 0), Week 3 (Index 2), Week 10 (Index 9)
+            const usableSaturdays = allSaturdays.filter((_, i) => !unusableIndices.includes(i)); 
+
+            state.games = state.games.filter(g => !g.isConference);
+
+            let allErrors = [];
+            const conferences = new Map();
+            state.teams.forEach(t => {
+                if (!conferences.has(t.conference)) conferences.set(t.conference, []);
+                conferences.get(t.conference).push(t.id);
+            });
+
+            let newGames = [];
+
+            for (const [confName, teamIds] of conferences.entries()) {
+                if (teamIds.length <= 1) continue; 
+                
+                const confErrors = [];
+                const requiredGames = CONF_GAMES_REQUIRED; 
+                
+                let teamSchedules = new Map(teamIds.map(id => [id, new Set(gamesForTeam(id).map(g=>g.date))]));
+                let requiredMatchups = new Map(teamIds.map(id => [id, new Set()])); 
+                let scheduledCount = new Map(teamIds.map(id => [id, 0]));
+
+                teamIds.forEach(id => {
+                    scheduledCount.set(id, gamesForTeam(id).filter(g=>g.isConference).length);
+                });
+
+                // 1. Process Rivalries (PRIORITY 1: Pinned Dates & Rotation)
+                teamIds.forEach(teamId => {
+                    const rivals = (state.rivals && state.rivals[teamId]) || [];
+                    rivals.forEach(r => {
+                        const oppId = r.oppId;
+                        const date = r.date;
+
+                        if (date && teamIds.includes(oppId) && !requiredMatchups.get(teamId).has(oppId)) { 
+                            if (!usableSaturdays.includes(date)) return; // Skip if date is an OOC week
+
+                            if (teamSchedules.get(teamId).has(date) || teamSchedules.get(oppId).has(date)) {
+                                confErrors.push(`Rivalry conflict for ${teamName(teamId)} vs ${teamName(oppId)}: Pinned date ${date} already used.`);
+                                return;
+                            }
+                            
+                            // H/A Rotation: Team with HIGHER ID hosts in ODD years (2025)
+                            let homeId, awayId;
+                            if (teamId < oppId) { 
+                                if (SCHEDULE_YEAR % 2 !== 0) { homeId = oppId; awayId = teamId; } 
+                                else { homeId = teamId; awayId = oppId; }
+                            } else { 
+                                if (SCHEDULE_YEAR % 2 !== 0) { homeId = teamId; awayId = oppId; } 
+                                else { homeId = oppId; awayId = teamId; }
+                            }
+
+                            const check = canScheduleGame(homeId, awayId, date, true, null);
+                            if (check.ok) {
+                                const gameId = `${date}-${homeId}-${awayId}-RIVAL`;
+                                newGames.push({ id: gameId, date, day: weekday(date), homeId, awayId, isConference: true, isRivalry: true });
+
+                                teamSchedules.get(teamId).add(date);
+                                teamSchedules.get(oppId).add(date);
+                                requiredMatchups.get(teamId).add(oppId);
+                                requiredMatchups.get(oppId).add(teamId);
+                                scheduledCount.set(teamId, scheduledCount.get(teamId) + 1);
+                                scheduledCount.set(oppId, scheduledCount.get(oppId) + 1);
+                            } else {
+                                confErrors.push(`Rivalry H/A cap conflict for ${teamName(teamId)} vs ${teamName(oppId)} on ${date}: ${check.msg}`);
+                            }
+                        }
+                    });
+                });
+
+                // 2. Schedule Remaining Conf Games (Fill-in)
+                let attempts = 0;
+                while (attempts < usableSaturdays.length * 2) {
+                    attempts++;
+                    let allDone = true;
+                    for (const teamId of teamIds) {
+                        if (scheduledCount.get(teamId) < requiredGames) {
+                            allDone = false;
+                            
+                            const availableOpponents = teamIds.filter(oppId => {
+                                if (oppId === teamId) return false;
+                                if (requiredMatchups.get(teamId).has(oppId)) return false; 
+                                return scheduledCount.get(oppId) < requiredGames;
+                            });
+
+                            if (availableOpponents.length === 0) continue;
+
+                            let openDate = usableSaturdays.find(date => !teamSchedules.get(teamId).has(date));
+                            if (!openDate) continue; 
+
+                            const matchedOpp = availableOpponents.find(oppId => !teamSchedules.get(oppId).has(openDate));
+                            
+                            if (matchedOpp) {
+                                let homeId = teamId;
+                                let awayId = matchedOpp;
+                                
+                                let check = canScheduleGame(homeId, awayId, openDate, true, null);
+                                if (!check.ok) {
+                                    [homeId, awayId] = [awayId, homeId];
+                                    check = canScheduleGame(homeId, awayId, openDate, true, null);
+                                }
+
+                                if (check.ok) {
+                                    const gameId = `${openDate}-${homeId}-${awayId}-CONF-${attempts}`;
+                                    newGames.push({ id: gameId, date: openDate, day: weekday(openDate), homeId, awayId, isConference: true });
+
+                                    teamSchedules.get(teamId).add(openDate);
+                                    teamSchedules.get(matchedOpp).add(openDate);
+                                    scheduledCount.set(teamId, scheduledCount.get(teamId) + 1);
+                                    scheduledCount.set(matchedOpp, scheduledCount.get(matchedOpp) + 1);
+                                    requiredMatchups.get(teamId).add(matchedOpp);
+                                    requiredMatchups.get(matchedOpp).add(teamId);
+                                } 
+                            }
+                        }
+                    }
+                    if (allDone) break;
+                }
+                
+                teamIds.forEach(id => {
+                    if (scheduledCount.get(id) < requiredGames) {
+                        confErrors.push(`Could not schedule ${requiredGames - scheduledCount.get(id)} conference games for ${teamName(id)}.`);
+                    }
+                });
+
+                allErrors = allErrors.concat(confErrors);
+            } 
+
+            state.games = state.games.concat(newGames);
+            return allErrors;
+        }
+
+        // --- League-Wide OOC Filler (using pairing) ---
+        function autoGenerateOOCSchedule(startDate){
+            
+            // Define the required OOC dates: Week 1 (Index 0), Week 3 (Index 2), Week 10 (Index 9)
+            const allSaturdays = generateSaturdaySeries(startDate, SEASON_WEEKS);
+            const requiredOOCIndices = [0, 2, 9]; 
+            const targetDates = requiredOOCIndices.map(i => allSaturdays[i]).filter(date => date);
+
+            let allErrors = [];
+            
+            // 1. Clear existing OOC games
+            state.games = state.games.filter(g => g.isConference);
+
+            // 2. Process OOC dates one by one
+            for(const date of targetDates){
+                let idleTeams = state.teams.filter(t => !hasGameOn(t.id, date));
+                
+                // Track current H/A/OOC counts for constraints. We use the current state + games scheduled this iteration.
+                let teamData = new Map(state.teams.map(t => [t.id, {
+                    id: t.id, 
+                    conf: teamConf(t.id), 
+                    oocCount: oocCount(t.id),
+                    homeCount: homeCount(t.id),
+                    awayCount: awayCount(t.id)
+                }]));
+
+                // Teams that need OOC games
+                let primaryTargets = idleTeams.filter(t => teamData.get(t.id).oocCount < OOC_GAMES_REQUIRED)
+                                              .sort((a,b) => teamData.get(a.id).oocCount - teamData.get(b.id).oocCount); 
+
+                let newGames = [];
+                let busy = new Set();
+                
+                // Attempt pairing for all primary targets
+                for(const teamA of primaryTargets){
+                    if(busy.has(teamA.id)) continue;
+                    
+                    const teamAConf = teamConf(teamA.id);
+                    const teamAData = teamData.get(teamA.id);
+
+                    // Find a viable opponent from the remaining primary targets
+                    const teamB = primaryTargets.filter(teamB => {
+                        if(teamB.id === teamA.id) return false;
+                        if(busy.has(teamB.id)) return false;
+                        if(teamConf(teamB.id) === teamAConf) return false; // Must be OOC
+                        return true;
+                    }).sort(() => Math.random() - 0.5)[0]; 
+
+                    if(teamB){
+                        const teamBData = teamData.get(teamB.id);
+                        let homeId = teamA.id;
+                        let awayId = teamB.id;
+
+                        // Priority for H/A balance: Try to assign home to the team with fewer home games
+                        if(teamAData.homeCount > teamBData.homeCount){
+                            [homeId, awayId] = [teamB.id, teamA.id];
+                        }
+
+                        // Sanity check: ensure neither team hits the cap *before* checking the schedule function
+                        if (teamAData.homeCount >= 7 && homeId === teamA.id) continue;
+                        if (teamBData.homeCount >= 7 && homeId === teamB.id) continue;
+                        if (teamAData.awayCount >= 6 && awayId === teamA.id) continue;
+                        if (teamBData.awayCount >= 6 && awayId === teamB.id) continue;
+
+                        const check = canScheduleGame(homeId, awayId, date, false, null); 
+                        
+                        if(!check.ok){
+                             // Try flipping the H/A if the original orientation failed a constraint check
+                             [homeId, awayId] = [awayId, homeId];
+                             
+                             // Re-check caps for the flipped assignment
+                             if (teamData.get(homeId).homeCount >= 7) continue;
+                             if (teamData.get(awayId).awayCount >= 6) continue;
+
+                             const checkFlipped = canScheduleGame(homeId, awayId, date, false, null); 
+                             if(checkFlipped.ok){
+                                 const id = `${date}-${homeId}-${awayId}-OOC-${Math.random().toString(36).slice(2,7)}`;
+                                 newGames.push({id, date, day: weekday(date), homeId, awayId, isConference: false});
+                                 busy.add(teamA.id);
+                                 busy.add(teamB.id);
+                                 teamData.get(teamA.id).oocCount++;
+                                 teamData.get(teamB.id).oocCount++;
+                                 if(homeId === teamA.id) teamData.get(teamA.id).homeCount++; else teamData.get(teamA.id).awayCount++;
+                                 if(homeId === teamB.id) teamData.get(teamB.id).homeCount++; else teamData.get(teamB.id).awayCount++;
+                             }
+                        } else {
+                            // Original H/A worked
+                            const id = `${date}-${homeId}-${awayId}-OOC-${Math.random().toString(36).slice(2,7)}`;
+                            newGames.push({id, date, day: weekday(date), homeId, awayId, isConference: false});
+                            
+                            busy.add(teamA.id);
+                            busy.add(teamB.id);
+
+                            teamData.get(teamA.id).oocCount++;
+                            teamData.get(teamB.id).oocCount++;
+                            if(homeId === teamA.id) teamData.get(teamA.id).homeCount++; else teamData.get(teamA.id).awayCount++;
+                            if(homeId === teamB.id) teamData.get(teamB.id).homeCount++; else teamData.get(teamB.id).awayCount++;
+                        }
+                    }
+                }
+
+                // Apply newly generated games
+                state.games = state.games.concat(newGames);
+            }
+
+            // 3. Final Check and Error Reporting
+            state.teams.forEach(t => {
+                const currentOOC = oocCount(t.id);
+                if (currentOOC < OOC_GAMES_REQUIRED) {
+                    allErrors.push(`Could only schedule ${currentOOC}/${OOC_GAMES_REQUIRED} OOC games for ${teamName(t.id)}.`);
+                }
+            });
+            
+            return allErrors;
+        }
+
+        // --- Full Schedule Orchestration ---
+        function initialScheduleBuild(startDate){
+            state.games = []; 
+            const confErrors = autoGenerateAllConfSchedule(startDate);
+            
+            // OOC generation now handles the entire league at once
+            const oocErrors = autoGenerateOOCSchedule(startDate); 
+
+            autosave();
+            return {confErrors, oocErrors};
+        }
+
+        // ====== UI POPULATION & EVENT HANDLERS ======
+
+        function fillTeamSelects(){
+            const teamSel = $teamSelect;
+            const oppSel = $newOpp;
+            const availSel = $availTeam;
+
+            teamSel.innerHTML = "";
+            oppSel.innerHTML = "";
+            availSel.innerHTML = "";
+
+            state.teams.forEach(t=>{
+                const label = `${t.name} (${t.conference})`;
+                teamSel.appendChild(new Option(label, t.id));
+                oppSel.appendChild(new Option(label, t.id));
+                availSel.appendChild(new Option(label, t.id));
+            });
+
+            const defId = state.selectedTeamId || state.teams[0]?.id || "";
+            if(defId){
+                teamSel.value = defId;
+                availSel.value = defId;
+            }
+        }
+
+        function renderSchedule(){
+            const teamId = $teamSelect.value;
+            if(!teamId){ $schedBody.innerHTML = ""; $counts.textContent = ""; return; }
+
+            const games = gamesForTeam(teamId)
+                .slice()
+                .sort((a,b)=>a.date.localeCompare(b.date));
+
+            $schedBody.innerHTML = "";
+            
+            games.forEach((g,idx)=>{
+                const asHome = g.homeId===teamId;
+                const oppId = asHome ? g.awayId : g.homeId;
+                const tr = document.createElement("tr");
+                const typeClass = gameTypeClass(g.isConference);
+                tr.innerHTML = `
+                    <td>${idx+1}</td>
+                    <td>${g.date}</td>
+                    <td>${g.day}</td>
+                    <td class="${typeClass}">${teamName(oppId)}</td>
+                    <td class="${typeClass}">${asHome?"H":"A"}</td>
+                    <td class="${typeClass}">${gameTypeLabel(g.isConference)}</td>
+                    <td><button class="chip" data-game="${g.id}">Edit</button></td>
+                `;
+                $schedBody.appendChild(tr);
+            });
+
+            $schedBody.querySelectorAll("button[data-game]").forEach(btn=>{
+                btn.addEventListener("click", ()=>{
+                    const id = btn.getAttribute("data-game");
+                    startEdit(teamId, id);
+                });
+            });
+
+            const conf = confCount(teamId);
+            const ooc 	= oocCount(teamId);
+            const h = homeCount(teamId);
+            const a = awayCount(teamId);
+            
+            const totalGames = conf + ooc;
+            const byeWeek = SEASON_WEEKS - totalGames;
+
+            $counts.textContent =
+                `${teamName(teamId)} — Conf: ${conf}/${CONF_GAMES_REQUIRED} · OOC: ${ooc}/${OOC_GAMES_REQUIRED} · Total: ${totalGames}/${SEASON_WEEKS-1} · Bye Weeks: ${byeWeek}`;
+        }
+        
+        function renderConflicts(){
+            const issues=[];
+            state.teams.forEach(t=>{
+                const seen = new Set();
+                gamesForTeam(t.id).forEach(g=>{
+                    const key = `${t.id}|${g.date}`;
+                    if(seen.has(key)) issues.push(`Double-booked: ${teamName(t.id)} on ${g.date}`);
+                    seen.add(key);
+                });
+            });
+            $conflicts.innerHTML = issues.length
+                ? issues.map(x=>`<div class="err">${x}</div>`).join("")
+                : `<span class="ok">No per-team date conflicts detected.</span>`;
+        }
+
+        function addGameFromForm(){
+            const teamId = $teamSelect.value;
+            const date = $newDate.value;
+            const oppId = $newOpp.value;
+            const loc = $newLoc.value;
+            const flag = $newConfFlag.value;
+
+            if(!teamId || !date || !oppId){ $createMsg.textContent = "Pick team, opponent, and date."; return; }
+            if(teamId===oppId){ $createMsg.textContent = "Opponent cannot be the same team."; return; }
+
+            const same = (teamConf(teamId) === teamConf(oppId));
+            let isConf;
+            if(flag==="conf") isConf = true;
+            else if(flag==="ooc") isConf = false;
+            else isConf = same;
+
+            let homeId, awayId;
+            if(loc==="H"){ homeId = teamId; awayId = oppId; }
+            else { homeId = oppId; awayId = teamId; }
+
+            const check = canScheduleGame(homeId, awayId, date, isConf, null);
+            if(!check.ok){ $createMsg.textContent = check.msg; return; }
+
+            const id = `${date}-${homeId}-${awayId}-${Math.random().toString(36).slice(2,7)}`;
+            state.games.push({id,date,day:weekday(date),homeId,awayId,isConference:isConf});
+
+            autosave();
+            $createMsg.textContent = "Game added.";
+            renderSchedule();
+            renderConflicts();
+        }
+        
+        function startEdit(teamId, gameId){
+            currentEditId = gameId;
+            const g = state.games.find(x=>x.id===gameId);
+            if(!g){
+                $editTarget.textContent = "—";
+                $editMsg.textContent = "Game not found.";
+                return;
+            }
+            const asHome = (g.homeId===teamId);
+            const oppId = asHome ? g.awayId : g.homeId;
+
+            $editTarget.textContent = `${teamName(teamId)} vs ${teamName(oppId)} on ${g.date}`;
+            $editDate.value = g.date;
+            $editLoc.value = asHome ? "H" : "A";
+            $editConfFlag.value = g.isConference ? "conf" : "ooc";
+            refreshEditOpponents();
+            $editMsg.textContent = "";
+        }
+        
+        function applyEdit(){
+            if(!currentEditId){ $editMsg.textContent = "Select a game first."; return; }
+            const teamId = $teamSelect.value;
+            const game = state.games.find(g=>g.id===currentEditId);
+            if(!game || !teamId){ $editMsg.textContent = "Game not found."; return; }
+
+            const date = $editDate.value || game.date;
+            let newOpp = $editOpp.value || (game.homeId===teamId ? game.awayId : game.homeId);
+            const loc = $editLoc.value;
+            const flag = $editConfFlag.value;
+
+            if(!date || !newOpp){ $editMsg.textContent = "Missing date or opponent."; return; }
+
+            const same = (teamConf(teamId) === teamConf(newOpp));
+            let isConf;
+            if(flag==="conf") isConf = true;
+            else if(flag==="ooc") isConf = false;
+            else isConf = same;
+
+            let homeId, awayId;
+            if(loc==="H"){ homeId = teamId; awayId = newOpp; }
+            else { homeId = newOpp; awayId = teamId; }
+
+            const check = canScheduleGame(homeId, awayId, date, isConf, game.id);
+            if(!check.ok){ $editMsg.textContent = check.msg; return; }
+
+            game.date = date;
+            game.day = weekday(date);
+            game.homeId = homeId;
+            game.awayId = awayId;
+            game.isConference = isConf;
+            game.isRivalry = game.isRivalry && isConf; 
+
+            autosave();
+            $editMsg.textContent = "Updated.";
+            renderSchedule();
+            renderConflicts();
+        }
+
+        function deleteGame(){
+            if(!currentEditId){ $editMsg.textContent = "Select a game to delete."; return; }
+            state.games = state.games.filter(g=>g.id!==currentEditId);
+            currentEditId = null;
+            $editTarget.textContent = "—";
+            $editMsg.textContent = "Deleted.";
+            autosave();
+            renderSchedule();
+            renderConflicts();
+        }
+        
+        function loadFile(e){
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const obj = JSON.parse(evt.target.result);
+                    if(obj.version !== VERSION){
+                        if(confirm(`This file is version ${obj.version}, but the app is version ${VERSION}. Attempt to load?`)){
+                            applyLoadedState(obj);
+                        } else {
+                             setStatus("File load cancelled.", "warn");
+                             return;
+                        }
+                    }else{
+                         applyLoadedState(obj);
+                    }
+                    fillTeamSelects();
+                    handleTeamChange();
+                    renderConflicts();
+                    setStatus("Save file loaded successfully.", "ok");
+                } catch (error) {
+                    setStatus(`Error parsing file: ${error.message}`, "err");
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        function renderAvailable(){
+            const teamId = $availTeam.value;
+            const date = $availDate.value;
+            $availConfList.innerHTML = "";
+            $availOOCList.innerHTML = "";
+            if(!teamId || !date) return;
+
+            const {same, other} = availableOpponents(teamId, date);
+
+            function renderList(container, list, label){
+                if(!list.length){
+                    container.innerHTML = `<span class="small">None</span>`;
+                    return;
+                }
+                list.forEach(t=>{
+                    const btn = document.createElement("button");
+                    btn.className = "chip";
+                    btn.textContent = t.name;
+                    btn.addEventListener("click", ()=>{
+                        $teamSelect.value = teamId;
+                        $newDate.value = date;
+                        $newOpp.value = t.id;
+                        $newLoc.value = "H";
+                        if(label==="conf") $newConfFlag.value = "conf";
+                        else if(label==="ooc") $newConfFlag.value = "ooc";
+                        $createMsg.textContent = `Prefilled ${teamName(teamId)} vs ${t.name} on ${date}.`;
+                        renderSchedule();
+                    });
+                    container.appendChild(btn);
+                });
+            }
+
+            renderList($availConfList, same, "conf");
+            renderList($availOOCList, other, "ooc");
+        }
+        
+        function refreshEditOpponents(){
+            $editOpp.innerHTML = "";
+            if(!currentEditId) return;
+            const game = state.games.find(g=>g.id===currentEditId);
+            if(!game) return;
+
+            const date = $editDate.value || game.date;
+            const teamId = $teamSelect.value;
+            if(!teamId || !date) return;
+
+            const flag = $editConfFlag.value;
+            const myConf = teamConf(teamId);
+
+            const options = state.teams.filter(t=>{
+                if(t.id===teamId) return false;
+                if(hasGameOn(t.id, date, currentEditId)) return false;
+                if(flag==="conf" && t.conference!==myConf) return false;
+                if(flag==="ooc" && t.conference===myConf) return false;
+                return true;
+            }).sort((a,b)=>a.name.localeCompare(b.name));
+
+            const currentOpp = (game.homeId===teamId ? game.awayId : game.homeId);
+            const currentOppTeam = teamById(currentOpp);
+            if(currentOppTeam && !hasGameOn(currentOppTeam.id, date, currentEditId)){
+                $editOpp.appendChild(new Option(`${currentOppTeam.name} (current)`, currentOppTeam.id));
+            }
+            options.forEach(t=> $editOpp.appendChild(new Option(t.name, t.id)));
+        }
+
+        function populateRivalOptions(teamId){
+            const myConf = teamConf(teamId);
+            const options = state.teams
+                .filter(t=>t.id!==teamId && t.conference===myConf)
+                .sort((a,b)=>a.name.localeCompare(b.name));
+
+            const selects = [$rival1,$rival2,$rival3];
+            selects.forEach(sel=>{
+                sel.innerHTML = "";
+                sel.appendChild(new Option("—", ""));
+                options.forEach(t=> sel.appendChild(new Option(t.name, t.id)));
+            });
+        }
+
+        function loadRivalsUI(){
+            const teamId = $teamSelect.value;
+            if(!teamId) return;
+            populateRivalOptions(teamId);
+
+            const cfg = (state.rivals && state.rivals[teamId]) || [];
+            const slots = [
+                {sel:$rival1, date:$rival1Date},
+                {sel:$rival2, date:$rival2Date},
+                {sel:$rival3, date:$rival3Date},
+            ];
+            slots.forEach((slot, idx)=>{
+                const row = cfg[idx];
+                if(row){
+                    slot.sel.value = row.oppId || "";
+                    slot.date.value = row.date || "";
+                }else{
+                    slot.sel.value = "";
+                    slot.date.value = "";
+                }
+            });
+        }
+
+        function saveRivalsForTeam(){
+            const teamId = $teamSelect.value;
+            if(!teamId){ $autoMsg.textContent = "Select a team first."; return; }
+            const myConf = teamConf(teamId);
+
+            const raw = [
+                {opp:$rival1.value, date:$rival1Date.value},
+                {opp:$rival2.value, date:$rival2Date.value},
+                {opp:$rival3.value, date:$rival3Date.value},
+            ];
+
+            const used = new Set();
+            const result = [];
+
+            for(const r of raw){
+                if(!r.opp) continue;
+                if(teamConf(r.opp) !== myConf){
+                    $autoMsg.textContent = "All rivals must be from the same conference as the selected team.";
+                    return;
+                }
+                if(used.has(r.opp)){
+                    $autoMsg.textContent = "Rivals must be three distinct teams.";
+                    return;
+                }
+                used.add(r.opp);
+                result.push({oppId:r.opp, date:r.date || ""});
+            }
+
+            if(!state.rivals) state.rivals = {};
+            state.rivals[teamId] = result;
+            autosave();
+            $autoMsg.textContent = "Rivals template saved for this team. Rebuild schedule to apply date locks.";
+        }
+
+
+        // ====== INITIALIZATION & EVENT LISTENERS ======
+        document.getElementById("saveBtn").addEventListener("click", autosave);
+        document.getElementById("loadBtn").addEventListener("click", ()=>document.getElementById("fileInput").click());
+        document.getElementById("fileInput").addEventListener("change", loadFile);
+        $teamSelect.addEventListener("change", handleTeamChange);
+        document.getElementById("btnAddGame").addEventListener("click", addGameFromForm);
+        document.getElementById("btnCheckAvail").addEventListener("click", renderAvailable);
+        document.getElementById("btnApplyEdit").addEventListener("click", applyEdit);
+        document.getElementById("btnDelete").addEventListener("click", deleteGame);
+        document.getElementById("btnSaveRivals").addEventListener("click", saveRivalsForTeam);
+        
+        // Auto-generate Schedule Hooks
+        document.getElementById("btnFullRebuild").addEventListener("click", ()=>{
+            const startDate = $autoStartDate.value || getFirstSaturdayInSeptember(SCHEDULE_YEAR);
+            $autoStartDate.value = startDate;
+
+            $autoMsg.textContent = "Starting full league schedule rebuild...";
+            const {confErrors, oocErrors} = initialScheduleBuild(startDate);
+            
+            let msg = `Full Schedule Rebuilt. ${confErrors.length} Conf warnings, ${oocErrors.length} OOC warnings.`;
+            if (confErrors.length || oocErrors.length) {
+                setStatus(msg, "warn");
+                console.warn("Configuration Errors:", confErrors.concat(oocErrors));
+            } else {
+                 setStatus(msg, "ok");
+            }
+
+
+            renderSchedule();
+            renderConflicts();
+        });
+        document.getElementById("btnAutoOOC").addEventListener("click", ()=>{
+            const teamId = $teamSelect.value;
+            const startDate = $autoStartDate.value || getFirstSaturdayInSeptember(SCHEDULE_YEAR);
+            $autoStartDate.value = startDate;
+            
+            if(!teamId){ $autoMsg.textContent = "Select a team first."; return; }
+            
+            $autoMsg.textContent = `Starting OOC fill (League-wide reset) to ensure all teams get 3 games...`;
+            
+            const errors = autoGenerateOOCSchedule(startDate); 
+            
+            let msg = `OOC fill complete (League-wide reset). ${errors.length} warnings.`;
+            if (errors.length) {
+                 setStatus(msg, "warn");
+                 console.warn("OOC Fill Errors:", errors);
+            } else {
+                setStatus(msg, "ok");
+            }
+            
+            autosave();
+            renderSchedule();
+            renderConflicts();
+        });
+
+        function handleTeamChange(){
+            state.selectedTeamId = $teamSelect.value;
+            renderSchedule();
+            loadRivalsUI();
+            currentEditId = null;
+        }
+
+        async function init(){
+            setStatus("Loading D1 team data...");
+            try{
+                await loadDivisionI();
+                let loaded = false;
+                
+                const localData = localStorage.getItem(LOCAL_KEY);
+                if(localData){
+                    try{
+                        const obj = JSON.parse(localData);
+                        if(obj.version === VERSION && Array.isArray(obj.teams) && obj.teams.length > 0){
+                            applyLoadedState(obj);
+                            setStatus(`Loaded previous session. ${state.teams.length} teams.`, "ok");
+                            loaded = true;
+                        }
+                    }catch(e){
+                        console.error("Local load error:", e);
+                    }
+                }
+                
+                const startDate = getFirstSaturdayInSeptember(SCHEDULE_YEAR);
+                $autoStartDate.value = startDate;
+
+                if (!loaded) {
+                     setStatus(`Fresh start. Generating full league schedule...`);
+                     const {confErrors, oocErrors} = initialScheduleBuild(startDate);
+                     let msg = `Fresh schedule generated. ${confErrors.length} Conf warnings, ${oocErrors.length} OOC warnings.`;
+                     if (confErrors.length || oocErrors.length) {
+                         setStatus(msg, "warn");
+                         console.warn("Configuration Errors:", confErrors.concat(oocErrors));
+                     } else {
+                        setStatus(msg, "ok");
+                     }
+                }
+
+
+                fillTeamSelects();
+                handleTeamChange();
+                renderConflicts();
+            }catch(e){
+                setStatus(`Fatal error during initialization: ${e.message}. Ensure data files are in ${DATA_ROOT}/.`, "err");
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>

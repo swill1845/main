@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "CHARL2","name": "Charleston Southern" },
+    { "id": "HPU",  "name": "High Point" },
+    { "id": "LONG", "name": "Longwood" },
+    { "id": "PC",   "name": "Presbyterian" },
+    { "id": "RAD",  "name": "Radford" },
+    { "id": "UNCA", "name": "UNC Asheville" },
+    { "id": "USCU", "name": "USC Upstate" },
+    { "id": "WIN",  "name": "Winthrop" }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "sports": [
+    { "id": "football_m", "name": "Football (Men)", "shards": ["names.json", "rosters.json", "schedules.json", "results.json"] }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "CAN",  "name": "Canisius" },
+    { "id": "FAIR", "name": "Fairfield" },
+    { "id": "IONA", "name": "Iona" },
+    { "id": "MAN",  "name": "Manhattan" },
+    { "id": "MAR",  "name": "Marist" },
+    { "id": "MOUNT","name": "Mount St. Mary’s" },
+    { "id": "NIAG", "name": "Niagara" },
+    { "id": "QUIN", "name": "Quinnipiac" },
+    { "id": "RID",  "name": "Rider" },
+    { "id": "SPC",  "name": "Saint Peter’s" },
+    { "id": "SIE",  "name": "Siena" }
+  ]
+}

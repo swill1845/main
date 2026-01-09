@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "AKRON", "name": "Akron" },
+    { "id": "BALL",  "name": "Ball State" },
+    { "id": "BGSU",  "name": "Bowling Green" },
+    { "id": "BUFF",  "name": "Buffalo" },
+    { "id": "CMU",   "name": "Central Michigan" },
+    { "id": "EMU",   "name": "Eastern Michigan" },
+    { "id": "KENT",  "name": "Kent State" },
+    { "id": "M-OH",  "name": "Miami (OH)" },
+    { "id": "NIU",   "name": "Northern Illinois" },
+    { "id": "OHIO",  "name": "Ohio" },
+    { "id": "TOL",   "name": "Toledo" },
+    { "id": "WMU",   "name": "Western Michigan" }
+  ]
+}

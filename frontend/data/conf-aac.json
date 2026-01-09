@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "CHAR", "name": "Charlotte" },
+    { "id": "ECU",  "name": "East Carolina" },
+    { "id": "FAU",  "name": "Florida Atlantic" },
+    { "id": "MEM",  "name": "Memphis" },
+    { "id": "NAVY", "name": "Navy" },
+    { "id": "NORTE", "name": "North Texas" },
+    { "id": "RICE", "name": "Rice" },
+    { "id": "SMU",  "name": "SMU" },
+    { "id": "SOFL", "name": "South Florida" },
+    { "id": "TEM",  "name": "Temple" },
+    { "id": "TULN", "name": "Tulane" },
+    { "id": "TULS", "name": "Tulsa" },
+    { "id": "UAB",  "name": "UAB" },
+    { "id": "UTSA", "name": "UTSA" }
+  ]
+}

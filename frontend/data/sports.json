@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "lastUpdated": "2025-11-28",
+  "sports": [
+    { "id": "football",     "name": "Football",              "genders": ["M"] },
+    { "id": "baseball",     "name": "Baseball",              "genders": ["M"] },
+    { "id": "rugby",        "name": "Rugby",                 "genders": ["M"] },
+
+    { "id": "softball",     "name": "Softball",              "genders": ["W"] },
+    { "id": "equestrian",   "name": "Equestrian",            "genders": ["W"] },
+    { "id": "volleyball",   "name": "Volleyball",            "genders": ["W"] },
+
+    { "id": "basketball",   "name": "Basketball",            "genders": ["M","W"] },
+    { "id": "soccer",       "name": "Soccer",                "genders": ["M","W"] },
+    { "id": "lacrosse",     "name": "Lacrosse",              "genders": ["M","W"] },
+    { "id": "ice_hockey",   "name": "Ice Hockey",            "genders": ["M","W"] },
+    { "id": "tennis",       "name": "Tennis",                "genders": ["M","W"] },
+    { "id": "swim_dive",    "name": "Swimming & Diving",     "genders": ["M","W"] },
+    { "id": "track_field",  "name": "Track & Field",         "genders": ["M","W"] },
+    { "id": "golf",         "name": "Golf",                  "genders": ["M","W"] },
+    { "id": "wrestling",    "name": "Wrestling",             "genders": ["M","W"] },
+    { "id": "gymnastics",   "name": "Gymnastics",            "genders": ["M","W"] },
+    { "id": "rowing",       "name": "Rowing",                "genders": ["M","W"] },
+    { "id": "water_polo",   "name": "Water Polo",            "genders": ["M","W"] },
+    { "id": "bowling",      "name": "Bowling",               "genders": ["M","W"] },
+    { "id": "fencing",      "name": "Fencing",               "genders": ["M","W"] },
+    { "id": "skiing",       "name": "Skiing",                "genders": ["M","W"] },
+    { "id": "rifle",        "name": "Rifle",                 "genders": ["M","W"] }
+  ]
+}

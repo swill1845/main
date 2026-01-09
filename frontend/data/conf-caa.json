@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "CHARL","name": "College of Charleston" },
+    { "id": "DEL",  "name": "Delaware" },
+    { "id": "DREX", "name": "Drexel" },
+    { "id": "ELON", "name": "Elon" },
+    { "id": "HAMP", "name": "Hampton" },
+    { "id": "HOF",  "name": "Hofstra" },
+    { "id": "MONM", "name": "Monmouth" },
+    { "id": "NCAT", "name": "North Carolina A&T" },
+    { "id": "NE",   "name": "Northeastern" },
+    { "id": "STONY","name": "Stony Brook" },
+    { "id": "TOWS", "name": "Towson" },
+    { "id": "UNCW", "name": "UNC Wilmington" },
+    { "id": "WILLI","name": "William & Mary" }
+  ]
+}

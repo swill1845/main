@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "lastUpdated": "2025-11-28",
+  "conferences": [
+    { "id": "ACC",  "name": "Atlantic Coast Conference",        "file": "conf-acc.json" },
+    { "id": "B1G",  "name": "Big Ten Conference",               "file": "conf-b1g.json" },
+    { "id": "SEC",  "name": "Southeastern Conference",          "file": "conf-sec.json" },
+    { "id": "B12",  "name": "Big 12 Conference",                "file": "conf-b12.json" },
+    { "id": "P12",  "name": "Pac-12 Conference",                "file": "conf-p12.json" },
+
+    { "id": "AAC",  "name": "American Athletic Conference",     "file": "conf-aac.json" },
+    { "id": "MWC",  "name": "Mountain West Conference",         "file": "conf-mwc.json" },
+    { "id": "SBC",  "name": "Sun Belt Conference",              "file": "conf-sbc.json" },
+    { "id": "MAC",  "name": "Mid-American Conference",          "file": "conf-mac.json" },
+    { "id": "CUSA", "name": "Conference USA",                   "file": "conf-cusa.json" },
+
+    { "id": "BE",   "name": "Big East Conference",              "file": "conf-be.json" },
+    { "id": "A10",  "name": "Atlantic 10 Conference",           "file": "conf-a10.json" },
+    { "id": "WCC",  "name": "West Coast Conference",            "file": "conf-wcc.json" },
+    { "id": "MVC",  "name": "Missouri Valley Conference",       "file": "conf-mvc.json" },
+    { "id": "MW",   "name": "Midwestern Collegiate (Horizon)",  "file": "conf-hl.json" },
+
+    { "id": "WAC",  "name": "Western Athletic Conference",      "file": "conf-wac.json" },
+    { "id": "BW",   "name": "Big West Conference",              "file": "conf-bw.json" },
+    { "id": "BSKY", "name": "Big Sky Conference",               "file": "conf-bsky.json" },
+    { "id": "CAA",  "name": "Coastal/Colonial Athletic Assoc.", "file": "conf-caa.json" },
+    { "id": "OVC",  "name": "Ohio Valley Conference",           "file": "conf-ovc.json" },
+
+    { "id": "BSOU", "name": "Big South Conference",             "file": "conf-bsou.json" },
+    { "id": "SOCON","name": "Southern Conference",              "file": "conf-socon.json" },
+    { "id": "PAT",  "name": "Patriot League",                   "file": "conf-pat.json" },
+    { "id": "IVY",  "name": "Ivy League",                       "file": "conf-ivy.json" },
+    { "id": "MAAC", "name": "Metro Atlantic Athletic Conf.",    "file": "conf-maac.json" },
+
+    { "id": "NEC",  "name": "Northeast Conference",             "file": "conf-nec.json" },
+    { "id": "AE",   "name": "America East Conference",          "file": "conf-ae.json" },
+    { "id": "ASUN", "name": "ASUN Conference",                  "file": "conf-asun.json" },
+    { "id": "SUM",  "name": "Summit League",                    "file": "conf-sum.json" },
+    { "id": "SLC",  "name": "Southland Conference",             "file": "conf-slc.json" },
+
+    { "id": "SWAC", "name": "Southwestern Athletic Conference", "file": "conf-swac.json" },
+    { "id": "MEAC", "name": "Mid-Eastern Athletic Conference",  "file": "conf-meac.json" }
+  ]
+}
+

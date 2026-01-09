@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "EWU",  "name": "Eastern Washington" },
+    { "id": "IDAHO","name": "Idaho" },
+    { "id": "IDST", "name": "Idaho State" },
+    { "id": "MONT", "name": "Montana" },
+    { "id": "MSU",  "name": "Montana State" },
+    { "id": "NAU",  "name": "Northern Arizona" },
+    { "id": "NCOLO","name": "Northern Colorado" },
+    { "id": "PORTS","name": "Portland State" },
+    { "id": "SACST","name": "Sacramento State" },
+    { "id": "WEB",  "name": "Weber State" }
+  ]
+}

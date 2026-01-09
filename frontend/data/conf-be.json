@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "BUT",  "name": "Butler" },
+    { "id": "CREI", "name": "Creighton" },
+    { "id": "DEP",  "name": "DePaul" },
+    { "id": "GTWN", "name": "Georgetown" },
+    { "id": "MARQ", "name": "Marquette" },
+    { "id": "PROV", "name": "Providence" },
+    { "id": "SJU",  "name": "St. John’s" },
+    { "id": "SHU",  "name": "Seton Hall" },
+    { "id": "VILL", "name": "Villanova" },
+    { "id": "XAV",  "name": "Xavier" },
+    { "id": "UCONN","name": "UConn" }
+  ]
+}

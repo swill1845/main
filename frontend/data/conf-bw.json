@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "CALPO","name": "Cal Poly" },
+    { "id": "UCD",  "name": "UC Davis" },
+    { "id": "UCI",  "name": "UC Irvine" },
+    { "id": "UCR",  "name": "UC Riverside" },
+    { "id": "UCSB", "name": "UC Santa Barbara" },
+    { "id": "UCSd", "name": "UC San Diego" },
+    { "id": "UH",   "name": "Hawai‘i" },
+    { "id": "CSF",  "name": "Cal State Fullerton" },
+    { "id": "CSUN", "name": "CSU Northridge" },
+    { "id": "LBSU", "name": "Long Beach State" }
+  ]
+}

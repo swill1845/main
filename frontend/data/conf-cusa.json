@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "FIU",  "name": "FIU" },
+    { "id": "JAXST","name": "Jacksonville State" },
+    { "id": "KSU2", "name": "Kennesaw State" },
+    { "id": "LIB",  "name": "Liberty" },
+    { "id": "LT",   "name": "Louisiana Tech" },
+    { "id": "MTSU", "name": "Middle Tennessee" },
+    { "id": "NMST", "name": "New Mexico State" },
+    { "id": "SAM",  "name": "Sam Houston" },
+    { "id": "UTEP", "name": "UTEP" },
+    { "id": "WKY",  "name": "Western Kentucky" }
+  ]
+}

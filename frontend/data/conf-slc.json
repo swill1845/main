@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "HCU",  "name": "Houston Christian" },
+    { "id": "INO",  "name": "Incarnate Word" },
+    { "id": "LAM",  "name": "Lamar" },
+    { "id": "MCNE", "name": "McNeese" },
+    { "id": "NICH", "name": "Nicholls" },
+    { "id": "NWST", "name": "Northwestern State" },
+    { "id": "SELA", "name": "Southeastern Louisiana" },
+    { "id": "TA&MCC","name": "Texas A&M–Corpus Christi" },
+    { "id": "UNO",  "name": "New Orleans" }
+  ]
+}

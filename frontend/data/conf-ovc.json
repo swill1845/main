@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "EIU",  "name": "Eastern Illinois" },
+    { "id": "LIND", "name": "Lindenwood" },
+    { "id": "LITR", "name": "Little Rock" },
+    { "id": "MOR",  "name": "Morehead State" },
+    { "id": "SEMO", "name": "SE Missouri State" },
+    { "id": "SIUE", "name": "SIU Edwardsville" },
+    { "id": "TNST", "name": "Tennessee State" },
+    { "id": "TNTECH","name": "Tennessee Tech" },
+    { "id": "USI2", "name": "Southern Indiana" },
+    { "id": "WILL", "name": "Western Illinois" }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "DUQ",  "name": "Duquesne" },
+    { "id": "DAY",  "name": "Dayton" },
+    { "id": "DAV",  "name": "Davidson" },
+    { "id": "FOR",  "name": "Fordham" },
+    { "id": "GMU",  "name": "George Mason" },
+    { "id": "GWU",  "name": "George Washington" },
+    { "id": "LAS",  "name": "La Salle" },
+    { "id": "LOY-CH","name": "Loyola Chicago" },
+    { "id": "MASS", "name": "UMass" },
+    { "id": "URI",  "name": "Rhode Island" },
+    { "id": "RICH", "name": "Richmond" },
+    { "id": "SBU",  "name": "St. Bonaventure" },
+    { "id": "SLU",  "name": "Saint Louis" },
+    { "id": "VCU",  "name": "VCU" }
+  ]
+}

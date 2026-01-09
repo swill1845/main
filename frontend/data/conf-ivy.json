@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "BRN",  "name": "Brown" },
+    { "id": "CLMB", "name": "Columbia" },
+    { "id": "COR",  "name": "Cornell" },
+    { "id": "DART", "name": "Dartmouth" },
+    { "id": "HARV", "name": "Harvard" },
+    { "id": "PENN", "name": "Penn" },
+    { "id": "PRIN", "name": "Princeton" },
+    { "id": "YALE", "name": "Yale" }
+  ]
+}

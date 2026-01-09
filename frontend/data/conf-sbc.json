@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "APP",  "name": "Appalachian State" },
+    { "id": "ARST", "name": "Arkansas State" },
+    { "id": "CCU",  "name": "Coastal Carolina" },
+    { "id": "GAST", "name": "Georgia State" },
+    { "id": "GSO",  "name": "Georgia Southern" },
+    { "id": "JMU",  "name": "James Madison" },
+    { "id": "MRSH", "name": "Marshall" },
+    { "id": "ODU",  "name": "Old Dominion" },
+    { "id": "SALA", "name": "South Alabama" },
+    { "id": "USA",  "name": "UT Arlington (non-football)" },
+    { "id": "TROY", "name": "Troy" },
+    { "id": "ULM",  "name": "ULM" },
+    { "id": "ULL",  "name": "Louisiana" },
+    { "id": "TXST", "name": "Texas State" }
+  ]
+}

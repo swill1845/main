@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "ARIZ", "name": "Arizona" },
+    { "id": "ASU",  "name": "Arizona State" },
+    { "id": "BYU",  "name": "BYU" },
+    { "id": "CINC", "name": "Cincinnati" },
+    { "id": "COLO", "name": "Colorado" },
+    { "id": "HOU",  "name": "Houston" },
+    { "id": "ISU",  "name": "Iowa State" },
+    { "id": "KU",   "name": "Kansas" },
+    { "id": "KSU",  "name": "Kansas State" },
+    { "id": "OKST", "name": "Oklahoma State" },
+    { "id": "TCU",  "name": "TCU" },
+    { "id": "TTU",  "name": "Texas Tech" },
+    { "id": "UCF",  "name": "UCF" },
+    { "id": "UTAH", "name": "Utah" },
+    { "id": "WVU",  "name": "West Virginia" },
+    { "id": "ASU2", "name": "Note: Use ASU for Arizona State (above)" }
+  ]
+}

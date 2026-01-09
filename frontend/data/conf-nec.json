@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "CCSU", "name": "Central Connecticut" },
+    { "id": "FDU",  "name": "FDU" },
+    { "id": "LEMOY","name": "Le Moyne" },
+    { "id": "LIU",  "name": "LIU" },
+    { "id": "MERR", "name": "Merrimack" },
+    { "id": "SACR", "name": "Sacred Heart" },
+    { "id": "SFPA", "name": "Saint Francis (PA)" },
+    { "id": "WAG",  "name": "Wagner" }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "members": [
+    { "id": "ILL",  "name": "Illinois" },
+    { "id": "IND",  "name": "Indiana" },
+    { "id": "IOWA", "name": "Iowa" },
+    { "id": "MD",   "name": "Maryland" },
+    { "id": "MICH", "name": "Michigan" },
+    { "id": "MSU",  "name": "Michigan State" },
+    { "id": "MINN", "name": "Minnesota" },
+    { "id": "NEB",  "name": "Nebraska" },
+    { "id": "NU",   "name": "Northwestern" },
+    { "id": "OSU",  "name": "Ohio State" },
+    { "id": "PSU",  "name": "Penn State" },
+    { "id": "PUR",  "name": "Purdue" },
+    { "id": "RUTG", "name": "Rutgers" },
+    { "id": "WISC", "name": "Wisconsin" },
+    { "id": "UCLA", "name": "UCLA" },
+    { "id": "USC",  "name": "USC" },
+    { "id": "ORE",  "name": "Oregon" },
+    { "id": "WASH", "name": "Washington" }
+  ]
+}
